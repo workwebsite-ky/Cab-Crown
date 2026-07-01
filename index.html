@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="Cab Crown – Premium taxi and chauffeur service. Luxury rides, professional drivers, 24/7 availability. Book your ride today."/>
+<meta name="keywords" content="premium taxi service, luxury cab, chauffeur service, airport transfer, cab crown"/>
+<title>Cab Crown | Premium Taxi & Chauffeur Service</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C96D;
+    --gold-dark: #9A7A2E;
+    --black: #0A0A0A;
+    --dark: #111111;
+    --dark2: #1A1A1A;
+    --dark3: #222222;
+    --white: #F5F0E8;
+    --gray: #888880;
+    --radius: 4px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── LOADER ── */
+  #loader {
+    position: fixed; inset: 0; z-index: 9999;
+    background: var(--black);
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 20px;
+    transition: opacity .6s ease, visibility .6s ease;
+  }
+  #loader.hidden { opacity: 0; visibility: hidden; }
+  .loader-crown {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem; font-weight: 900;
+    color: var(--gold);
+    letter-spacing: 6px;
+    animation: pulse 1.2s ease-in-out infinite;
+  }
+  .loader-bar {
+    width: 200px; height: 2px;
+    background: var(--dark3);
+    border-radius: 2px; overflow: hidden;
+  }
+  .loader-fill {
+    height: 100%; background: var(--gold);
+    animation: load 1.8s ease-in-out forwards;
+  }
+  @keyframes load { from { width: 0 } to { width: 100% } }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    padding: 20px 60px;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: all .4s ease;
+  }
+  nav.scrolled {
+    background: rgba(10,10,10,.95);
+    backdrop-filter: blur(16px);
+    padding: 14px 60px;
+    border-bottom: 1px solid rgba(201,168,76,.15);
+  }
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; font-weight: 900;
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-decoration: none;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .logo span { color: var(--white); }
+  .logo-crown { font-size: 1.2rem; }
+  .nav-links {
+    display: flex; gap: 40px; list-style: none;
+  }
+  .nav-links a {
+    color: var(--white); text-decoration: none;
+    font-size: .875rem; letter-spacing: 1.5px; text-transform: uppercase;
+    opacity: .8; transition: opacity .2s, color .2s;
+  }
+  .nav-links a:hover { opacity: 1; color: var(--gold); }
+  .nav-cta {
+    background: var(--gold);
+    color: var(--black) !important;
+    padding: 10px 24px; border-radius: 2px;
+    font-weight: 500 !important; opacity: 1 !important;
+    transition: background .2s !important;
+  }
+  .nav-cta:hover { background: var(--gold-light) !important; }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { width: 24px; height: 2px; background: var(--white); transition: .3s; }
+
+  /* ── HERO ── */
+  #home {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    position: relative; overflow: hidden;
+    background: var(--black);
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=1800&q=80') center/cover no-repeat;
+    opacity: .18;
+    transform: scale(1.05);
+    animation: slowzoom 20s ease-in-out infinite alternate;
+  }
+  @keyframes slowzoom { from{transform:scale(1.05)} to{transform:scale(1.12)} }
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(10,10,10,.95) 0%, rgba(10,10,10,.6) 60%, transparent 100%);
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    padding: 0 60px; max-width: 780px;
+    margin-top: 80px;
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 10px;
+    color: var(--gold); font-size: .75rem; letter-spacing: 3px; text-transform: uppercase;
+    margin-bottom: 28px;
+    opacity: 0; animation: fadeUp .8s .3s forwards;
+  }
+  .hero-tag::before, .hero-tag::after {
+    content: ''; width: 30px; height: 1px; background: var(--gold);
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-weight: 900; line-height: 1.05;
+    margin-bottom: 28px;
+    opacity: 0; animation: fadeUp .8s .5s forwards;
+  }
+  .hero-title em { color: var(--gold); font-style: normal; }
+  .hero-sub {
+    font-size: 1.05rem; color: rgba(245,240,232,.7);
+    max-width: 500px; margin-bottom: 48px;
+    opacity: 0; animation: fadeUp .8s .7s forwards;
+  }
+  .hero-btns {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp .8s .9s forwards;
+  }
+  .btn-primary {
+    background: var(--gold); color: var(--black);
+    padding: 16px 36px; border: none; border-radius: 2px;
+    font-family: 'DM Sans', sans-serif; font-size: .875rem;
+    font-weight: 500; letter-spacing: 2px; text-transform: uppercase;
+    cursor: pointer; text-decoration: none;
+    transition: background .25s, transform .2s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent; color: var(--white);
+    padding: 16px 36px; border: 1px solid rgba(245,240,232,.3); border-radius: 2px;
+    font-family: 'DM Sans', sans-serif; font-size: .875rem;
+    font-weight: 500; letter-spacing: 2px; text-transform: uppercase;
+    cursor: pointer; text-decoration: none;
+    transition: border-color .25s, color .25s, transform .2s;
+    display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+  .hero-stats {
+    position: absolute; bottom: 60px; right: 60px;
+    display: flex; gap: 48px; z-index: 2;
+    opacity: 0; animation: fadeUp .8s 1.1s forwards;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem; font-weight: 700; color: var(--gold);
+    line-height: 1;
+  }
+  .stat-label { font-size: .7rem; letter-spacing: 2px; text-transform: uppercase; opacity: .5; margin-top: 4px; }
+
+  /* ── SECTION COMMON ── */
+  section { padding: 120px 60px; }
+  .section-tag {
+    display: inline-flex; align-items: center; gap: 10px;
+    color: var(--gold); font-size: .7rem; letter-spacing: 3px; text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .section-tag::before { content: ''; width: 24px; height: 1px; background: var(--gold); }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 700; line-height: 1.15;
+    margin-bottom: 20px;
+  }
+  .section-title em { color: var(--gold); font-style: normal; }
+  .section-sub { color: rgba(245,240,232,.6); max-width: 520px; font-size: 1rem; }
+  .divider { width: 48px; height: 2px; background: var(--gold); margin: 28px 0; }
+
+  @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:none} }
+  @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ── BOOKING BANNER ── */
+  #book-banner {
+    background: var(--dark2);
+    border-top: 1px solid rgba(201,168,76,.15);
+    border-bottom: 1px solid rgba(201,168,76,.15);
+    padding: 60px;
+  }
+  .book-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center;
+  }
+  .book-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem; font-weight: 700;
+  }
+  .book-title em { color: var(--gold); font-style: normal; }
+  .book-form {
+    display: flex; gap: 12px; flex-wrap: wrap;
+  }
+  .book-input {
+    background: var(--dark3); border: 1px solid rgba(201,168,76,.2);
+    color: var(--white); padding: 14px 20px; border-radius: 2px;
+    font-family: 'DM Sans', sans-serif; font-size: .9rem;
+    outline: none; min-width: 180px;
+    transition: border-color .2s;
+  }
+  .book-input:focus { border-color: var(--gold); }
+  .book-input::placeholder { color: rgba(245,240,232,.35); }
+
+  /* ── SERVICES ── */
+  #services { background: var(--dark); }
+  .services-header { max-width: 600px; margin-bottom: 72px; }
+  .services-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2px;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .service-card {
+    background: var(--dark2); padding: 48px 40px;
+    position: relative; overflow: hidden;
+    cursor: default; transition: background .3s;
+  }
+  .service-card::before {
+    content: ''; position: absolute; bottom: 0; left: 0;
+    width: 100%; height: 2px;
+    background: var(--gold);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform .4s ease;
+  }
+  .service-card:hover { background: var(--dark3); }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-icon {
+    font-size: 2.2rem; margin-bottom: 24px;
+    display: block;
+  }
+  .service-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .service-desc { font-size: .9rem; color: rgba(245,240,232,.6); line-height: 1.7; }
+  .service-num {
+    position: absolute; top: 24px; right: 28px;
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem; font-weight: 900; color: rgba(201,168,76,.07);
+    line-height: 1;
+  }
+
+  /* ── WHY CHOOSE ── */
+  #why { background: var(--black); }
+  .why-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+    max-width: 1100px; margin: 0 auto; align-items: center;
+  }
+  .why-image {
+    position: relative;
+  }
+  .why-image img {
+    width: 100%; aspect-ratio: 4/5; object-fit: cover;
+    border-radius: 2px; filter: brightness(.85);
+  }
+  .why-badge {
+    position: absolute; bottom: -24px; left: -24px;
+    background: var(--gold); color: var(--black);
+    padding: 28px 32px; border-radius: 2px;
+    text-align: center;
+  }
+  .why-badge-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem; font-weight: 900; line-height: 1;
+  }
+  .why-badge-text { font-size: .7rem; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; }
+  .why-points { display: flex; flex-direction: column; gap: 32px; margin-top: 48px; }
+  .why-point { display: flex; gap: 20px; align-items: flex-start; }
+  .why-point-icon {
+    width: 44px; height: 44px; flex-shrink: 0;
+    background: rgba(201,168,76,.1); border: 1px solid rgba(201,168,76,.2);
+    border-radius: 2px; display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; color: var(--gold);
+  }
+  .why-point h4 { font-family: 'Playfair Display', serif; font-size: 1.05rem; margin-bottom: 6px; }
+  .why-point p { font-size: .875rem; color: rgba(245,240,232,.55); }
+
+  /* ── FLEET / PRICING ── */
+  #fleet { background: var(--dark); }
+  .fleet-header { max-width: 600px; margin: 0 auto; text-align: center; margin-bottom: 72px; }
+  .fleet-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .fleet-card {
+    background: var(--dark2); border-radius: 2px; overflow: hidden;
+    border: 1px solid rgba(201,168,76,.1); transition: border-color .3s, transform .3s;
+    position: relative;
+  }
+  .fleet-card:hover { border-color: rgba(201,168,76,.4); transform: translateY(-6px); }
+  .fleet-card.popular {
+    border-color: var(--gold);
+  }
+  .fleet-popular-badge {
+    position: absolute; top: 16px; right: 16px;
+    background: var(--gold); color: var(--black);
+    font-size: .65rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    padding: 4px 12px; border-radius: 1px;
+  }
+  .fleet-img { width: 100%; height: 200px; object-fit: cover; filter: brightness(.75); }
+  .fleet-body { padding: 32px; }
+  .fleet-tier {
+    font-size: .7rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .fleet-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; font-weight: 700; margin-bottom: 12px;
+  }
+  .fleet-desc { font-size: .875rem; color: rgba(245,240,232,.55); margin-bottom: 24px; }
+  .fleet-price {
+    display: flex; align-items: baseline; gap: 6px; margin-bottom: 24px;
+  }
+  .fleet-price-from { font-size: .75rem; color: var(--gold); }
+  .fleet-price-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-weight: 700; color: var(--white);
+  }
+  .fleet-price-unit { font-size: .75rem; color: rgba(245,240,232,.4); }
+  .fleet-features { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-bottom: 32px; }
+  .fleet-features li { font-size: .85rem; color: rgba(245,240,232,.6); display: flex; align-items: center; gap: 10px; }
+  .fleet-features li::before { content: '✓'; color: var(--gold); font-weight: 700; }
+
+  /* ── TESTIMONIALS ── */
+  #testimonials { background: var(--black); }
+  .testimonials-header { max-width: 600px; margin-bottom: 72px; }
+  .testi-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 24px;
+    max-width: 1100px;
+  }
+  .testi-card {
+    background: var(--dark2); padding: 40px;
+    border-radius: 2px; border: 1px solid rgba(201,168,76,.08);
+    position: relative;
+  }
+  .testi-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem; color: rgba(201,168,76,.2);
+    line-height: .6; margin-bottom: 20px;
+  }
+  .testi-text { font-size: .95rem; color: rgba(245,240,232,.75); line-height: 1.8; margin-bottom: 28px; }
+  .testi-author { display: flex; align-items: center; gap: 14px; }
+  .testi-avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--dark3); overflow: hidden; flex-shrink: 0;
+    border: 1.5px solid var(--gold);
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem; color: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .testi-name { font-weight: 500; font-size: .9rem; margin-bottom: 2px; }
+  .testi-role { font-size: .75rem; color: var(--gold); letter-spacing: 1px; }
+  .stars { color: var(--gold); font-size: .9rem; margin-bottom: 16px; letter-spacing: 2px; }
+
+  /* ── ABOUT ── */
+  #about { background: var(--dark); }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+    max-width: 1100px; margin: 0 auto; align-items: center;
+  }
+  .about-text p { color: rgba(245,240,232,.65); margin-bottom: 20px; font-size: .95rem; }
+  .about-img { position: relative; }
+  .about-img img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 2px; }
+  .about-img-overlay {
+    position: absolute; bottom: 32px; right: -24px;
+    background: var(--black); border: 1px solid rgba(201,168,76,.2);
+    padding: 24px 28px; border-radius: 2px;
+  }
+  .about-img-overlay h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem; margin-bottom: 4px;
+  }
+  .about-img-overlay p { font-size: .8rem; color: var(--gold); }
+
+  /* ── FAQ ── */
+  #faq { background: var(--black); }
+  .faq-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+    max-width: 1100px; margin-top: 64px;
+  }
+  .faq-item {
+    border: 1px solid rgba(201,168,76,.12);
+    border-radius: 2px; overflow: hidden;
+  }
+  .faq-q {
+    padding: 24px 28px; cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between;
+    font-weight: 500; font-size: .95rem;
+    transition: background .2s;
+    user-select: none;
+  }
+  .faq-q:hover { background: rgba(201,168,76,.05); }
+  .faq-icon {
+    width: 24px; height: 24px; flex-shrink: 0;
+    border: 1px solid rgba(201,168,76,.3); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .75rem; color: var(--gold);
+    transition: transform .3s;
+  }
+  .faq-item.open .faq-icon { transform: rotate(45deg); }
+  .faq-a {
+    max-height: 0; overflow: hidden;
+    transition: max-height .4s ease, padding .3s;
+    font-size: .875rem; color: rgba(245,240,232,.6); line-height: 1.75;
+  }
+  .faq-item.open .faq-a { max-height: 200px; }
+  .faq-a-inner { padding: 0 28px 24px; }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--dark); }
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .contact-info { }
+  .contact-info p { color: rgba(245,240,232,.65); margin-bottom: 48px; }
+  .contact-items { display: flex; flex-direction: column; gap: 28px; }
+  .contact-item { display: flex; gap: 18px; align-items: flex-start; }
+  .contact-item-icon {
+    width: 44px; height: 44px; flex-shrink: 0;
+    background: rgba(201,168,76,.1);
+    border: 1px solid rgba(201,168,76,.2);
+    border-radius: 2px; display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+  }
+  .contact-item h4 { font-size: .75rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+  .contact-item p { font-size: .9rem; color: rgba(245,240,232,.75); margin: 0; }
+  .contact-form { display: flex; flex-direction: column; gap: 16px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+  .form-group label { font-size: .75rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold); }
+  .form-input {
+    background: var(--dark3); border: 1px solid rgba(201,168,76,.15);
+    color: var(--white); padding: 14px 18px; border-radius: 2px;
+    font-family: 'DM Sans', sans-serif; font-size: .9rem;
+    outline: none; transition: border-color .2s;
+    resize: none;
+  }
+  .form-input:focus { border-color: var(--gold); }
+  .form-input::placeholder { color: rgba(245,240,232,.25); }
+
+  /* ── CTA SECTION ── */
+  #cta {
+    background: var(--gold);
+    padding: 100px 60px;
+    text-align: center;
+  }
+  #cta .section-title { color: var(--black); }
+  #cta .section-sub { color: rgba(10,10,10,.7); margin: 0 auto; }
+  .btn-dark {
+    background: var(--black); color: var(--gold);
+    padding: 18px 44px; border: none; border-radius: 2px;
+    font-family: 'DM Sans', sans-serif; font-size: .875rem;
+    font-weight: 500; letter-spacing: 2px; text-transform: uppercase;
+    cursor: pointer; text-decoration: none; display: inline-block;
+    transition: background .25s, transform .2s;
+    margin-top: 40px;
+  }
+  .btn-dark:hover { background: var(--dark2); transform: translateY(-2px); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--black); padding: 80px 60px 40px;
+    border-top: 1px solid rgba(201,168,76,.12);
+  }
+  .footer-grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px;
+    max-width: 1100px; margin: 0 auto 60px;
+  }
+  .footer-brand { }
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; font-weight: 900; color: var(--gold);
+    letter-spacing: 3px; margin-bottom: 16px; display: block;
+  }
+  .footer-brand p { font-size: .875rem; color: rgba(245,240,232,.45); line-height: 1.8; }
+  .footer-socials { display: flex; gap: 12px; margin-top: 28px; }
+  .social-link {
+    width: 36px; height: 36px; border: 1px solid rgba(201,168,76,.2);
+    border-radius: 2px; display: flex; align-items: center; justify-content: center;
+    color: var(--gold); font-size: .85rem; text-decoration: none;
+    transition: background .2s, border-color .2s;
+  }
+  .social-link:hover { background: rgba(201,168,76,.1); border-color: var(--gold); }
+  .footer-col h5 {
+    font-size: .7rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold);
+    margin-bottom: 24px;
+  }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .footer-links a {
+    color: rgba(245,240,232,.45); text-decoration: none;
+    font-size: .875rem; transition: color .2s;
+  }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-bottom {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 40px; border-top: 1px solid rgba(201,168,76,.08);
+    font-size: .78rem; color: rgba(245,240,232,.3);
+  }
+
+  /* ── BACK TO TOP ── */
+  #back-top {
+    position: fixed; bottom: 32px; right: 32px; z-index: 500;
+    width: 44px; height: 44px;
+    background: var(--gold); color: var(--black);
+    border: none; border-radius: 2px; cursor: pointer;
+    font-size: 1rem; display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity .3s, transform .2s;
+  }
+  #back-top.visible { opacity: 1; pointer-events: all; }
+  #back-top:hover { transform: translateY(-3px); }
+
+  /* ── WHATSAPP ── */
+  #whatsapp {
+    position: fixed; bottom: 88px; right: 32px; z-index: 500;
+    width: 44px; height: 44px;
+    background: #25D366; color: #fff;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    text-decoration: none; font-size: 1.3rem;
+    box-shadow: 0 4px 20px rgba(37,211,102,.4);
+    transition: transform .2s;
+  }
+  #whatsapp:hover { transform: scale(1.1); }
+
+  /* ── MOBILE ── */
+  @media (max-width: 900px) {
+    nav { padding: 20px 28px; }
+    nav.scrolled { padding: 14px 28px; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .mobile-menu {
+      position: fixed; inset: 0; z-index: 999;
+      background: rgba(10,10,10,.97);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 40px; transform: translateX(100%); transition: transform .4s ease;
+    }
+    .mobile-menu.open { transform: none; }
+    .mobile-menu a {
+      color: var(--white); text-decoration: none;
+      font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700;
+    }
+    .mobile-menu a:hover { color: var(--gold); }
+    .mobile-close {
+      position: absolute; top: 24px; right: 28px;
+      background: none; border: none; color: var(--white); font-size: 1.5rem; cursor: pointer;
+    }
+    section { padding: 80px 28px; }
+    .hero-content { padding: 0 28px; }
+    .hero-stats { display: none; }
+    .book-inner { grid-template-columns: 1fr; }
+    .why-grid, .about-grid, .contact-grid { grid-template-columns: 1fr; }
+    .faq-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+    #book-banner { padding: 48px 28px; }
+    #cta { padding: 80px 28px; }
+    footer { padding: 60px 28px 32px; }
+    .why-badge { display: none; }
+    .about-img-overlay { right: 0; }
+  }
+  @media (max-width: 560px) {
+    .hero-title { font-size: 2.5rem; }
+    .fleet-grid, .services-grid, .testi-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-crown">CROWN</div>
+  <div class="loader-bar"><div class="loader-fill"></div></div>
+</div>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="closeMenu">✕</button>
+  <a href="#home" onclick="closeMobile()">Home</a>
+  <a href="#services" onclick="closeMobile()">Services</a>
+  <a href="#fleet" onclick="closeMobile()">Fleet</a>
+  <a href="#about" onclick="closeMobile()">About</a>
+  <a href="#contact" onclick="closeMobile()">Contact</a>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#home" class="logo"><span class="logo-crown">♛</span> CAB<span> CROWN</span></a>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#fleet">Fleet & Pricing</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#contact" class="nav-cta">Book Now</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="openMobile()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Premium Taxi Service</div>
+    <h1 class="hero-title">Ride in<br><em>Royal</em><br>Comfort</h1>
+    <p class="hero-sub">Cab Crown delivers luxury transportation with professional drivers, immaculate vehicles, and unmatched punctuality — 24 hours a day.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary">Book Your Ride</a>
+      <a href="#fleet" class="btn-outline">View Fleet</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num" data-target="12000">0</div>
+      <div class="stat-label">Rides Completed</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" data-target="98">0</div>
+      <div class="stat-label">% Satisfaction</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" data-target="24">0</div>
+      <div class="stat-label">Hrs Available</div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING BANNER -->
+<div id="book-banner">
+  <div class="book-inner">
+    <div>
+      <div class="section-tag">Quick Book</div>
+      <h2 class="book-title">Reserve Your <em>Crown Ride</em> Instantly</h2>
+    </div>
+    <div class="book-form">
+      <input class="book-input" type="text" placeholder="📍 Pickup Location"/>
+      <input class="book-input" type="text" placeholder="🏁 Drop-off"/>
+      <input class="book-input" type="date" />
+      <a href="mailto:contactglanders@gmail.com?subject=Cab Crown Booking Request" class="btn-primary">Request Ride</a>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-header reveal">
+    <div class="section-tag">What We Offer</div>
+    <h2 class="section-title">Premium <em>Ride</em> Services</h2>
+    <div class="divider"></div>
+    <p class="section-sub">From everyday commutes to special occasions, Cab Crown has a service tailored precisely to your needs.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <span class="service-icon">✈️</span>
+      <div class="service-num">01</div>
+      <h3 class="service-name">Airport Transfers</h3>
+      <p class="service-desc">Punctual, stress-free airport pickup and drop-off. Flight tracking included so we're always on time, even when your flight isn't.</p>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-icon">🏙️</span>
+      <div class="service-num">02</div>
+      <h3 class="service-name">City Rides</h3>
+      <p class="service-desc">Navigate the city in style. Quick, comfortable, and reliable rides to any destination — business meetings, shopping, or dinner.</p>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-icon">🎩</span>
+      <div class="service-num">03</div>
+      <h3 class="service-name">Chauffeur Service</h3>
+      <p class="service-desc">A dedicated, uniformed chauffeur for your full day or event. Discrete, professional, and always at your service.</p>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-icon">💍</span>
+      <div class="service-num">04</div>
+      <h3 class="service-name">Wedding & Events</h3>
+      <p class="service-desc">Make your special day unforgettable. Decorated vehicles, red-carpet service, and coordinated fleet for large wedding parties.</p>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-icon">🏢</span>
+      <div class="service-num">05</div>
+      <h3 class="service-name">Corporate Travel</h3>
+      <p class="service-desc">Reliable corporate accounts, executive sedans, and prompt service for your entire team's business travel needs.</p>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-icon">🛣️</span>
+      <div class="service-num">06</div>
+      <h3 class="service-name">Long Distance</h3>
+      <p class="service-desc">Comfortable intercity and outstation trips. Fixed pricing, no surprises — just a smooth, safe journey to any destination.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE US -->
+<section id="why">
+  <div class="why-grid">
+    <div class="why-image reveal">
+      <img src="https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=700&q=80" alt="Luxury cab interior"/>
+      <div class="why-badge">
+        <div class="why-badge-num">8+</div>
+        <div class="why-badge-text">Years of<br>Excellence</div>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="section-tag">Why Cab Crown</div>
+      <h2 class="section-title">The Gold Standard<br>in <em>Taxi</em> Service</h2>
+      <div class="divider"></div>
+      <p class="section-sub" style="margin-bottom:0">We don't just drive — we deliver an experience. Every detail crafted for your comfort and peace of mind.</p>
+      <div class="why-points">
+        <div class="why-point">
+          <div class="why-point-icon">⏱️</div>
+          <div>
+            <h4>Always On Time</h4>
+            <p>Real-time GPS tracking and precise scheduling ensure we're there when you need us, every single time.</p>
+          </div>
+        </div>
+        <div class="why-point">
+          <div class="why-point-icon">🛡️</div>
+          <div>
+            <h4>Vetted Drivers</h4>
+            <p>All our drivers are background-checked, licensed, and trained to deliver a safe, respectful experience.</p>
+          </div>
+        </div>
+        <div class="why-point">
+          <div class="why-point-icon">💳</div>
+          <div>
+            <h4>Transparent Pricing</h4>
+            <p>No surge pricing, no hidden fees. Know your fare before you ride — fixed, fair, and upfront.</p>
+          </div>
+        </div>
+        <div class="why-point">
+          <div class="why-point-icon">🌙</div>
+          <div>
+            <h4>24 / 7 Availability</h4>
+            <p>Day or night, weekday or holiday — Cab Crown is always ready to take you where you need to go.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FLEET & PRICING -->
+<section id="fleet">
+  <div class="fleet-header reveal">
+    <div class="section-tag">Fleet & Pricing</div>
+    <h2 class="section-title">Choose Your <em>Crown</em></h2>
+    <div class="divider" style="margin:20px auto"></div>
+    <p class="section-sub" style="margin:0 auto">Every vehicle in our fleet is immaculately maintained, thoroughly cleaned, and equipped for your comfort.</p>
+  </div>
+  <div class="fleet-grid">
+    <div class="fleet-card reveal">
+      <img class="fleet-img" src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=700&q=80" alt="Standard Sedan"/>
+      <div class="fleet-body">
+        <div class="fleet-tier">Standard Class</div>
+        <h3 class="fleet-name">Crown Sedan</h3>
+        <p class="fleet-desc">Comfortable saloon car, ideal for daily commutes and airport runs for up to 4 passengers.</p>
+        <div class="fleet-price">
+          <span class="fleet-price-from">From</span>
+          <span class="fleet-price-num">$12</span>
+          <span class="fleet-price-unit">/ base fare</span>
+        </div>
+        <ul class="fleet-features">
+          <li>Up to 4 passengers</li>
+          <li>Air conditioning</li>
+          <li>Free Wi-Fi</li>
+          <li>Complimentary water</li>
+        </ul>
+        <a href="mailto:contactglanders@gmail.com?subject=Crown Sedan Booking" class="btn-outline" style="width:100%;text-align:center;display:block">Book Now</a>
+      </div>
+    </div>
+    <div class="fleet-card popular reveal">
+      <span class="fleet-popular-badge">Most Popular</span>
+      <img class="fleet-img" src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=700&q=80" alt="Executive SUV"/>
+      <div class="fleet-body">
+        <div class="fleet-tier">Executive Class</div>
+        <h3 class="fleet-name">Crown Executive</h3>
+        <p class="fleet-desc">Premium executive sedan or SUV, perfect for business travel and special occasions.</p>
+        <div class="fleet-price">
+          <span class="fleet-price-from">From</span>
+          <span class="fleet-price-num">$22</span>
+          <span class="fleet-price-unit">/ base fare</span>
+        </div>
+        <ul class="fleet-features">
+          <li>Up to 4 passengers</li>
+          <li>Leather interior</li>
+          <li>Refreshments included</li>
+          <li>Priority dispatch</li>
+        </ul>
+        <a href="mailto:contactglanders@gmail.com?subject=Crown Executive Booking" class="btn-primary" style="width:100%;text-align:center;display:block">Book Now</a>
+      </div>
+    </div>
+    <div class="fleet-card reveal">
+      <img class="fleet-img" src="https://images.unsplash.com/photo-1567818735868-e71b99932e29?w=700&q=80" alt="Luxury Van"/>
+      <div class="fleet-body">
+        <div class="fleet-tier">Luxury Class</div>
+        <h3 class="fleet-name">Crown Prestige Van</h3>
+        <p class="fleet-desc">Spacious luxury MPV for groups, families, or when your luggage demands extra room.</p>
+        <div class="fleet-price">
+          <span class="fleet-price-from">From</span>
+          <span class="fleet-price-num">$38</span>
+          <span class="fleet-price-unit">/ base fare</span>
+        </div>
+        <ul class="fleet-features">
+          <li>Up to 8 passengers</li>
+          <li>Extra luggage space</li>
+          <li>Entertainment system</li>
+          <li>Uniformed chauffeur</li>
+        </ul>
+        <a href="mailto:contactglanders@gmail.com?subject=Crown Prestige Van Booking" class="btn-outline" style="width:100%;text-align:center;display:block">Book Now</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="testimonials-header reveal">
+    <div class="section-tag">Client Reviews</div>
+    <h2 class="section-title">What Our <em>Passengers</em> Say</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card reveal">
+      <div class="stars">★★★★★</div>
+      <div class="testi-quote">"</div>
+      <p class="testi-text">The driver arrived 10 minutes early, helped with my luggage, and had the car perfectly cooled. This is what premium service feels like. I'll never use another taxi company.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">JM</div>
+        <div>
+          <div class="testi-name">James M.</div>
+          <div class="testi-role">Corporate Executive</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="stars">★★★★★</div>
+      <div class="testi-quote">"</div>
+      <p class="testi-text">We booked Cab Crown for our entire wedding party. The coordination was flawless, the cars were stunning, and every single guest commented on how professional the drivers were.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">SR</div>
+        <div>
+          <div class="testi-name">Sarah R.</div>
+          <div class="testi-role">Bride</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="stars">★★★★★</div>
+      <div class="testi-quote">"</div>
+      <p class="testi-text">As a frequent traveller, I've tried many cab services. Cab Crown is in a league of its own — consistent quality, courteous staff, and the app makes booking effortless.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">AK</div>
+        <div>
+          <div class="testi-name">Ahmed K.</div>
+          <div class="testi-role">Business Traveller</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="reveal">
+      <div class="section-tag">Our Story</div>
+      <h2 class="section-title">Driven by <em>Excellence</em></h2>
+      <div class="divider"></div>
+      <div class="about-text">
+        <p>Cab Crown was founded with a single conviction: that taxi travel should be a pleasure, not just a means to an end. We set out to build the taxi service we always wished existed — one where punctuality is non-negotiable, vehicles are immaculate, and every driver takes genuine pride in their work.</p>
+        <p>Today, we serve thousands of satisfied passengers across the city. From the boardroom to the ballroom, from early morning flights to late-night celebrations, Cab Crown has been the trusted ride for those who expect nothing short of the best.</p>
+        <p>Our fleet is meticulously maintained, our drivers are rigorously trained, and our commitment to your comfort is absolute. When you choose Cab Crown, you don't just book a taxi — you command a crown ride.</p>
+      </div>
+      <a href="#contact" class="btn-primary" style="margin-top:16px">Get In Touch</a>
+    </div>
+    <div class="about-img reveal">
+      <img src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=700&q=80" alt="Professional Cab Crown driver"/>
+      <div class="about-img-overlay">
+        <h4>Est. 2016</h4>
+        <p>Premium Service Since Day One</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="reveal" style="max-width:600px;margin-bottom:0">
+    <div class="section-tag">FAQ</div>
+    <h2 class="section-title">Frequently <em>Asked</em></h2>
+    <div class="divider"></div>
+  </div>
+  <div class="faq-grid">
+    <div class="faq-item reveal" onclick="toggleFaq(this)">
+      <div class="faq-q">How do I book a Cab Crown ride? <span class="faq-icon">+</span></div>
+      <div class="faq-a"><div class="faq-a-inner">You can book via our contact form, email us at contactglanders@gmail.com, or call us directly. We aim to confirm your booking within 30 minutes.</div></div>
+    </div>
+    <div class="faq-item reveal" onclick="toggleFaq(this)">
+      <div class="faq-q">Is there surge pricing during peak hours? <span class="faq-icon">+</span></div>
+      <div class="faq-a"><div class="faq-a-inner">No. Cab Crown offers fixed, transparent pricing. The fare quoted at booking is the fare you pay — no surprises, no surge.</div></div>
+    </div>
+    <div class="faq-item reveal" onclick="toggleFaq(this)">
+      <div class="faq-q">Can I pre-book for the next day or week? <span class="faq-icon">+</span></div>
+      <div class="faq-a"><div class="faq-a-inner">Absolutely. We encourage advance bookings and can schedule rides weeks ahead. For regular corporate accounts we can set up recurring schedules.</div></div>
+    </div>
+    <div class="faq-item reveal" onclick="toggleFaq(this)">
+      <div class="faq-q">Do you offer corporate accounts? <span class="faq-icon">+</span></div>
+      <div class="faq-a"><div class="faq-a-inner">Yes. We offer dedicated corporate accounts with monthly invoicing, designated account managers, and priority fleet access for your team.</div></div>
+    </div>
+    <div class="faq-item reveal" onclick="toggleFaq(this)">
+      <div class="faq-q">What if my flight is delayed? <span class="faq-icon">+</span></div>
+      <div class="faq-a"><div class="faq-a-inner">We track all incoming flights in real time. If your flight is delayed, your driver will automatically adjust their arrival time at no extra charge.</div></div>
+    </div>
+    <div class="faq-item reveal" onclick="toggleFaq(this)">
+      <div class="faq-q">What payment methods do you accept? <span class="faq-icon">+</span></div>
+      <div class="faq-a"><div class="faq-a-inner">We accept cash, all major credit and debit cards, and bank transfers for corporate clients. Payment can be made in the vehicle or pre-paid online.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-grid">
+    <div class="reveal">
+      <div class="section-tag">Get In Touch</div>
+      <h2 class="section-title">Ready to <em>Ride?</em></h2>
+      <div class="divider"></div>
+      <p>Reach out to book your ride, enquire about corporate accounts, or simply ask any questions. Our team is available 24/7.</p>
+      <div class="contact-items">
+        <div class="contact-item">
+          <div class="contact-item-icon">📧</div>
+          <div>
+            <h4>Email Us</h4>
+            <p>contactglanders@gmail.com</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">⏰</div>
+          <div>
+            <h4>Hours</h4>
+            <p>24 Hours, 7 Days a Week</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">🚕</div>
+          <div>
+            <h4>Dispatch</h4>
+            <p>Rides available within 15 minutes</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal">
+      <form class="contact-form" onsubmit="submitForm(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Your Name</label>
+            <input class="form-input" type="text" placeholder="Full name" required/>
+          </div>
+          <div class="form-group">
+            <label>Phone</label>
+            <input class="form-input" type="tel" placeholder="+1 000 000 0000"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input class="form-input" type="email" placeholder="your@email.com" required/>
+        </div>
+        <div class="form-group">
+          <label>Service Type</label>
+          <select class="form-input">
+            <option value="" disabled selected>Select a service</option>
+            <option>Airport Transfer</option>
+            <option>City Ride</option>
+            <option>Chauffeur Service</option>
+            <option>Wedding & Events</option>
+            <option>Corporate Travel</option>
+            <option>Long Distance</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea class="form-input" rows="4" placeholder="Tell us about your journey..."></textarea>
+        </div>
+        <button type="submit" class="btn-primary" style="align-self:flex-start;border:none;cursor:pointer">Send Request</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="reveal">
+    <div class="section-tag" style="color:var(--black);justify-content:center">
+      <span style="background:var(--black);width:24px;height:1px;display:inline-block"></span>
+      Book Today
+      <span style="background:var(--black);width:24px;height:1px;display:inline-block"></span>
+    </div>
+    <h2 class="section-title" style="text-align:center;color:var(--black)">Your <em style="color:var(--dark2)">Crown Ride</em><br>Awaits</h2>
+    <p class="section-sub" style="color:rgba(10,10,10,.7);text-align:center;margin:0 auto">Experience what premium taxi service truly means. Book your first Cab Crown ride today.</p>
+    <div style="text-align:center">
+      <a href="mailto:contactglanders@gmail.com?subject=Cab Crown Booking" class="btn-dark">Book Your Ride Now</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="footer-logo">♛ CAB CROWN</span>
+      <p>Premium taxi and chauffeur service. Setting the gold standard for transportation — one ride at a time.</p>
+      <div class="footer-socials">
+        <a href="#" class="social-link" aria-label="Facebook">f</a>
+        <a href="#" class="social-link" aria-label="Instagram">ig</a>
+        <a href="#" class="social-link" aria-label="Twitter">tw</a>
+        <a href="#" class="social-link" aria-label="LinkedIn">in</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Services</h5>
+      <ul class="footer-links">
+        <li><a href="#services">Airport Transfers</a></li>
+        <li><a href="#services">City Rides</a></li>
+        <li><a href="#services">Chauffeur Service</a></li>
+        <li><a href="#services">Wedding & Events</a></li>
+        <li><a href="#services">Corporate Travel</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Company</h5>
+      <ul class="footer-links">
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#fleet">Fleet & Pricing</a></li>
+        <li><a href="#testimonials">Reviews</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Contact</h5>
+      <ul class="footer-links">
+        <li><a href="mailto:contactglanders@gmail.com">contactglanders@gmail.com</a></li>
+        <li><a href="#">24/7 Dispatch</a></li>
+        <li><a href="#">Corporate Accounts</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2024 Cab Crown. All rights reserved.</span>
+    <span>Premium Taxi & Chauffeur Service</span>
+  </div>
+</footer>
+
+<!-- BACK TO TOP -->
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- WHATSAPP -->
+<a href="https://wa.me/?text=Hello%20Cab%20Crown%2C%20I'd%20like%20to%20book%20a%20ride." id="whatsapp" target="_blank" aria-label="WhatsApp">💬</a>
+
+<script>
+// LOADER
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('loader').classList.add('hidden');
+  }, 1900);
+});
+
+// NAVBAR SCROLL
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 60);
+  document.getElementById('back-top').classList.toggle('visible', window.scrollY > 400);
+});
+
+// MOBILE MENU
+function openMobile() { document.getElementById('mobileMenu').classList.add('open'); }
+function closeMobile() { document.getElementById('mobileMenu').classList.remove('open'); }
+document.getElementById('closeMenu').onclick = closeMobile;
+
+// REVEAL ON SCROLL
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+    }
+  });
+}, { threshold: 0.12 });
+reveals.forEach(r => observer.observe(r));
+
+// ANIMATED COUNTERS
+const counters = document.querySelectorAll('[data-target]');
+const counterObs = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const el = entry.target;
+      const target = +el.dataset.target;
+      let current = 0;
+      const step = target / 60;
+      const timer = setInterval(() => {
+        current = Math.min(current + step, target);
+        el.textContent = Math.round(current).toLocaleString() + (target === 98 ? '%' : target === 24 ? '/7' : '+');
+        if (current >= target) clearInterval(timer);
+      }, 25);
+      counterObs.unobserve(el);
+    }
+  });
+}, { threshold: 0.5 });
+counters.forEach(c => counterObs.observe(c));
+
+// FAQ ACCORDION
+function toggleFaq(item) {
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(f => f.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+// CONTACT FORM
+function submitForm(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('button');
+  btn.textContent = 'Sending…';
+  setTimeout(() => {
+    btn.textContent = '✓ Request Sent!';
+    btn.style.background = '#2a6';
+    e.target.reset();
+    setTimeout(() => { btn.textContent = 'Send Request'; btn.style.background = ''; }, 3000);
+  }, 1200);
+  // Fallback mailto
+  const form = e.target;
+  const name = form.querySelector('[type=text]').value;
+  const email = form.querySelector('[type=email]').value;
+  window.location.href = `mailto:contactglanders@gmail.com?subject=Cab Crown Ride Request from ${name}&body=Name: ${name}%0AEmail: ${email}`;
+}
+</script>
+</body>
+</html>
